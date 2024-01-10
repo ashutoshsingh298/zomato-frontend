@@ -1,12 +1,15 @@
-import superPropBase from "@babel/runtime/helpers/esm/superPropBase";
+import _Reflect$get from "@babel/runtime-corejs3/core-js/reflect/get";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js/object/get-own-property-descriptor";
+import superPropBase from "./superPropBase.js";
 export default function _get(target, property, receiver) {
-  if (typeof Reflect !== "undefined" && Reflect.get) {
-    _get = Reflect.get;
+  if (typeof Reflect !== "undefined" && _Reflect$get) {
+    _get = _Reflect$get;
   } else {
     _get = function _get(target, property, receiver) {
       var base = superPropBase(target, property);
       if (!base) return;
-      var desc = Object.getOwnPropertyDescriptor(base, property);
+
+      var desc = _Object$getOwnPropertyDescriptor(base, property);
 
       if (desc.get) {
         return desc.get.call(receiver);

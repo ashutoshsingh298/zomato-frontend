@@ -1,9 +1,12 @@
-import AwaitValue from "@babel/runtime/helpers/esm/AwaitValue";
+import _Promise from "@babel/runtime-corejs3/core-js/promise";
+import _Symbol from "@babel/runtime-corejs3/core-js/symbol";
+import _Symbol$asyncIterator from "@babel/runtime-corejs3/core-js/symbol/async-iterator";
+import AwaitValue from "./AwaitValue.js";
 export default function AsyncGenerator(gen) {
   var front, back;
 
   function send(key, arg) {
-    return new Promise(function (resolve, reject) {
+    return new _Promise(function (resolve, reject) {
       var request = {
         key: key,
         arg: arg,
@@ -26,7 +29,8 @@ export default function AsyncGenerator(gen) {
       var result = gen[key](arg);
       var value = result.value;
       var wrappedAwait = value instanceof AwaitValue;
-      Promise.resolve(wrappedAwait ? value.wrapped : value).then(function (arg) {
+
+      _Promise.resolve(wrappedAwait ? value.wrapped : value).then(function (arg) {
         if (wrappedAwait) {
           resume(key === "return" ? "return" : "next", arg);
           return;
@@ -78,8 +82,8 @@ export default function AsyncGenerator(gen) {
   }
 }
 
-if (typeof Symbol === "function" && Symbol.asyncIterator) {
-  AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+if (typeof _Symbol === "function" && _Symbol$asyncIterator) {
+  AsyncGenerator.prototype[_Symbol$asyncIterator] = function () {
     return this;
   };
 }

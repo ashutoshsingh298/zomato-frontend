@@ -1,8 +1,13 @@
-import _typeof from "@babel/runtime/helpers/esm/typeof";
-import wrapNativeSuper from "@babel/runtime/helpers/esm/wrapNativeSuper";
-import getPrototypeOf from "@babel/runtime/helpers/esm/getPrototypeOf";
-import possibleConstructorReturn from "@babel/runtime/helpers/esm/possibleConstructorReturn";
-import inherits from "@babel/runtime/helpers/esm/inherits";
+import _typeof from "@babel/runtime-corejs3/helpers/typeof";
+import _WeakMap from "@babel/runtime-corejs3/core-js/weak-map";
+import _Symbol$replace from "@babel/runtime-corejs3/core-js/symbol/replace";
+import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js/instance/reduce";
+import _Object$keys from "@babel/runtime-corejs3/core-js/object/keys";
+import _Object$create from "@babel/runtime-corejs3/core-js/object/create";
+import wrapNativeSuper from "./wrapNativeSuper.js";
+import getPrototypeOf from "./getPrototypeOf.js";
+import possibleConstructorReturn from "./possibleConstructorReturn.js";
+import inherits from "./inherits.js";
 export default function _wrapRegExp(re, groups) {
   _wrapRegExp = function _wrapRegExp(re, groups) {
     return new BabelRegExp(re, undefined, groups);
@@ -12,7 +17,7 @@ export default function _wrapRegExp(re, groups) {
 
   var _super = RegExp.prototype;
 
-  var _groups = new WeakMap();
+  var _groups = new _WeakMap();
 
   function BabelRegExp(re, flags, groups) {
     var _this = _RegExp.call(this, re, flags);
@@ -31,17 +36,17 @@ export default function _wrapRegExp(re, groups) {
     return result;
   };
 
-  BabelRegExp.prototype[Symbol.replace] = function (str, substitution) {
+  BabelRegExp.prototype[_Symbol$replace] = function (str, substitution) {
     if (typeof substitution === "string") {
       var groups = _groups.get(this);
 
-      return _super[Symbol.replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function (_, name) {
+      return _super[_Symbol$replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function (_, name) {
         return "$" + groups[name];
       }));
     } else if (typeof substitution === "function") {
       var _this = this;
 
-      return _super[Symbol.replace].call(this, str, function () {
+      return _super[_Symbol$replace].call(this, str, function () {
         var args = [];
         args.push.apply(args, arguments);
 
@@ -52,17 +57,19 @@ export default function _wrapRegExp(re, groups) {
         return substitution.apply(this, args);
       });
     } else {
-      return _super[Symbol.replace].call(this, str, substitution);
+      return _super[_Symbol$replace].call(this, str, substitution);
     }
   };
 
   function buildGroups(result, re) {
+    var _context;
+
     var g = _groups.get(re);
 
-    return Object.keys(g).reduce(function (groups, name) {
+    return _reduceInstanceProperty(_context = _Object$keys(g)).call(_context, function (groups, name) {
       groups[name] = result[g[name]];
       return groups;
-    }, Object.create(null));
+    }, _Object$create(null));
   }
 
   return _wrapRegExp.apply(this, arguments);
