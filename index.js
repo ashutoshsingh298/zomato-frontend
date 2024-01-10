@@ -1,1 +1,3 @@
-module.exports = require("regenerator-runtime");
+'use strict';
+
+module.exports = require('./lib/argparse');
