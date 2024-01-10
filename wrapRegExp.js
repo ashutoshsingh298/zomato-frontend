@@ -1,12 +1,19 @@
-import _typeof from "@babel/runtime/helpers/typeof";
-import wrapNativeSuper from "./wrapNativeSuper.js";
-import getPrototypeOf from "./getPrototypeOf.js";
-import possibleConstructorReturn from "./possibleConstructorReturn.js";
-import inherits from "./inherits.js";
-export default function _wrapRegExp(re, groups) {
-  _wrapRegExp = function _wrapRegExp(re, groups) {
+var _typeof = require("@babel/runtime/helpers/typeof")["default"];
+
+var wrapNativeSuper = require("./wrapNativeSuper.js");
+
+var getPrototypeOf = require("./getPrototypeOf.js");
+
+var possibleConstructorReturn = require("./possibleConstructorReturn.js");
+
+var inherits = require("./inherits.js");
+
+function _wrapRegExp(re, groups) {
+  module.exports = _wrapRegExp = function _wrapRegExp(re, groups) {
     return new BabelRegExp(re, undefined, groups);
   };
+
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
 
   var _RegExp = wrapNativeSuper(RegExp);
 
@@ -67,3 +74,6 @@ export default function _wrapRegExp(re, groups) {
 
   return _wrapRegExp.apply(this, arguments);
 }
+
+module.exports = _wrapRegExp;
+module.exports["default"] = module.exports, module.exports.__esModule = true;

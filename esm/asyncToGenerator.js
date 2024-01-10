@@ -1,5 +1,3 @@
-import _Promise from "@babel/runtime-corejs3/core-js/promise";
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -12,7 +10,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   if (info.done) {
     resolve(value);
   } else {
-    _Promise.resolve(value).then(_next, _throw);
+    Promise.resolve(value).then(_next, _throw);
   }
 }
 
@@ -20,7 +18,7 @@ export default function _asyncToGenerator(fn) {
   return function () {
     var self = this,
         args = arguments;
-    return new _Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
       var gen = fn.apply(self, args);
 
       function _next(value) {

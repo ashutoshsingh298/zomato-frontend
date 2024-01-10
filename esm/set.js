@@ -1,19 +1,16 @@
-import _Reflect$set from "@babel/runtime-corejs3/core-js/reflect/set";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js/object/get-own-property-descriptor";
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js/object/define-property";
 import superPropBase from "./superPropBase.js";
 import defineProperty from "./defineProperty.js";
 
 function set(target, property, value, receiver) {
-  if (typeof Reflect !== "undefined" && _Reflect$set) {
-    set = _Reflect$set;
+  if (typeof Reflect !== "undefined" && Reflect.set) {
+    set = Reflect.set;
   } else {
     set = function set(target, property, value, receiver) {
       var base = superPropBase(target, property);
       var desc;
 
       if (base) {
-        desc = _Object$getOwnPropertyDescriptor(base, property);
+        desc = Object.getOwnPropertyDescriptor(base, property);
 
         if (desc.set) {
           desc.set.call(receiver, value);
@@ -23,7 +20,7 @@ function set(target, property, value, receiver) {
         }
       }
 
-      desc = _Object$getOwnPropertyDescriptor(receiver, property);
+      desc = Object.getOwnPropertyDescriptor(receiver, property);
 
       if (desc) {
         if (!desc.writable) {
@@ -31,8 +28,7 @@ function set(target, property, value, receiver) {
         }
 
         desc.value = value;
-
-        _Object$defineProperty(receiver, property, desc);
+        Object.defineProperty(receiver, property, desc);
       } else {
         defineProperty(receiver, property, value);
       }

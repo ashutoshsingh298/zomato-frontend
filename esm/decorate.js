@@ -1,16 +1,6 @@
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js/instance/map";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js/instance/for-each";
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js/object/define-property";
-import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js/instance/index-of";
-import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js/instance/splice";
-import _Symbol$toStringTag from "@babel/runtime-corejs3/core-js/symbol/to-string-tag";
-import _Object$assign from "@babel/runtime-corejs3/core-js/object/assign";
-import _findInstanceProperty from "@babel/runtime-corejs3/core-js/instance/find";
 import toArray from "./toArray.js";
 import toPropertyKey from "./toPropertyKey.js";
 export default function _decorate(decorators, factory, superClass, mixins) {
-  var _context;
-
   var api = _getDecoratorsApi();
 
   if (mixins) {
@@ -22,7 +12,7 @@ export default function _decorate(decorators, factory, superClass, mixins) {
   var r = factory(function initialize(O) {
     api.initializeInstanceElements(O, decorated.elements);
   }, superClass);
-  var decorated = api.decorateClass(_coalesceClassElements(_mapInstanceProperty(_context = r.d).call(_context, _createElementDescriptor)), decorators);
+  var decorated = api.decorateClass(_coalesceClassElements(r.d.map(_createElementDescriptor)), decorators);
   api.initializeClassElements(r.F, decorated.elements);
   return api.runClassFinishers(r.F, decorated.finishers);
 }
@@ -35,10 +25,8 @@ function _getDecoratorsApi() {
   var api = {
     elementsDefinitionOrder: [["method"], ["field"]],
     initializeInstanceElements: function initializeInstanceElements(O, elements) {
-      var _context2;
-
-      _forEachInstanceProperty(_context2 = ["method", "field"]).call(_context2, function (kind) {
-        _forEachInstanceProperty(elements).call(elements, function (element) {
+      ["method", "field"].forEach(function (kind) {
+        elements.forEach(function (element) {
           if (element.kind === kind && element.placement === "own") {
             this.defineClassElement(O, element);
           }
@@ -46,12 +34,9 @@ function _getDecoratorsApi() {
       }, this);
     },
     initializeClassElements: function initializeClassElements(F, elements) {
-      var _context3;
-
       var proto = F.prototype;
-
-      _forEachInstanceProperty(_context3 = ["method", "field"]).call(_context3, function (kind) {
-        _forEachInstanceProperty(elements).call(elements, function (element) {
+      ["method", "field"].forEach(function (kind) {
+        elements.forEach(function (element) {
           var placement = element.placement;
 
           if (element.kind === kind && (placement === "static" || placement === "prototype")) {
@@ -74,7 +59,7 @@ function _getDecoratorsApi() {
         };
       }
 
-      _Object$defineProperty(receiver, element.key, descriptor);
+      Object.defineProperty(receiver, element.key, descriptor);
     },
     decorateClass: function decorateClass(elements, decorators) {
       var newElements = [];
@@ -84,12 +69,10 @@ function _getDecoratorsApi() {
         prototype: [],
         own: []
       };
-
-      _forEachInstanceProperty(elements).call(elements, function (element) {
+      elements.forEach(function (element) {
         this.addElementPlacement(element, placements);
       }, this);
-
-      _forEachInstanceProperty(elements).call(elements, function (element) {
+      elements.forEach(function (element) {
         if (!_hasDecorators(element)) return newElements.push(element);
         var elementFinishersExtras = this.decorateElement(element, placements);
         newElements.push(elementFinishersExtras.element);
@@ -112,7 +95,7 @@ function _getDecoratorsApi() {
     addElementPlacement: function addElementPlacement(element, placements, silent) {
       var keys = placements[element.placement];
 
-      if (!silent && _indexOfInstanceProperty(keys).call(keys, element.key) !== -1) {
+      if (!silent && keys.indexOf(element.key) !== -1) {
         throw new TypeError("Duplicated element (" + element.key + ")");
       }
 
@@ -124,9 +107,7 @@ function _getDecoratorsApi() {
 
       for (var decorators = element.decorators, i = decorators.length - 1; i >= 0; i--) {
         var keys = placements[element.placement];
-
-        _spliceInstanceProperty(keys).call(keys, _indexOfInstanceProperty(keys).call(keys, element.key), 1);
-
+        keys.splice(keys.indexOf(element.key), 1);
         var elementObject = this.fromElementDescriptor(element);
         var elementFinisherExtras = this.toElementFinisherExtras((0, decorators[i])(elementObject) || elementObject);
         element = elementFinisherExtras.element;
@@ -193,17 +174,13 @@ function _getDecoratorsApi() {
         value: "Descriptor",
         configurable: true
       };
-
-      _Object$defineProperty(obj, _Symbol$toStringTag, desc);
-
+      Object.defineProperty(obj, Symbol.toStringTag, desc);
       if (element.kind === "field") obj.initializer = element.initializer;
       return obj;
     },
     toElementDescriptors: function toElementDescriptors(elementObjects) {
-      var _context4;
-
       if (elementObjects === undefined) return;
-      return _mapInstanceProperty(_context4 = toArray(elementObjects)).call(_context4, function (elementObject) {
+      return toArray(elementObjects).map(function (elementObject) {
         var element = this.toElementDescriptor(elementObject);
         this.disallowProperty(elementObject, "finisher", "An element descriptor");
         this.disallowProperty(elementObject, "extras", "An element descriptor");
@@ -230,7 +207,7 @@ function _getDecoratorsApi() {
         kind: kind,
         key: key,
         placement: placement,
-        descriptor: _Object$assign({}, descriptor)
+        descriptor: Object.assign({}, descriptor)
       };
 
       if (kind !== "field") {
@@ -259,15 +236,13 @@ function _getDecoratorsApi() {
     fromClassDescriptor: function fromClassDescriptor(elements) {
       var obj = {
         kind: "class",
-        elements: _mapInstanceProperty(elements).call(elements, this.fromElementDescriptor, this)
+        elements: elements.map(this.fromElementDescriptor, this)
       };
       var desc = {
         value: "Descriptor",
         configurable: true
       };
-
-      _Object$defineProperty(obj, _Symbol$toStringTag, desc);
-
+      Object.defineProperty(obj, Symbol.toStringTag, desc);
       return obj;
     },
     toClassDescriptor: function toClassDescriptor(obj) {
@@ -376,7 +351,7 @@ function _coalesceClassElements(elements) {
     var element = elements[i];
     var other;
 
-    if (element.kind === "method" && (other = _findInstanceProperty(newElements).call(newElements, isSameElement))) {
+    if (element.kind === "method" && (other = newElements.find(isSameElement))) {
       if (_isDataDescriptor(element.descriptor) || _isDataDescriptor(other.descriptor)) {
         if (_hasDecorators(element) || _hasDecorators(other)) {
           throw new ReferenceError("Duplicated methods (" + element.key + ") can't be decorated.");

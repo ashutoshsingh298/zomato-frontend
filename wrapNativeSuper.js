@@ -1,11 +1,15 @@
-import getPrototypeOf from "./getPrototypeOf.js";
-import setPrototypeOf from "./setPrototypeOf.js";
-import isNativeFunction from "./isNativeFunction.js";
-import construct from "./construct.js";
-export default function _wrapNativeSuper(Class) {
+var getPrototypeOf = require("./getPrototypeOf.js");
+
+var setPrototypeOf = require("./setPrototypeOf.js");
+
+var isNativeFunction = require("./isNativeFunction.js");
+
+var construct = require("./construct.js");
+
+function _wrapNativeSuper(Class) {
   var _cache = typeof Map === "function" ? new Map() : undefined;
 
-  _wrapNativeSuper = function _wrapNativeSuper(Class) {
+  module.exports = _wrapNativeSuper = function _wrapNativeSuper(Class) {
     if (Class === null || !isNativeFunction(Class)) return Class;
 
     if (typeof Class !== "function") {
@@ -33,5 +37,9 @@ export default function _wrapNativeSuper(Class) {
     return setPrototypeOf(Wrapper, Class);
   };
 
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
   return _wrapNativeSuper(Class);
 }
+
+module.exports = _wrapNativeSuper;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
