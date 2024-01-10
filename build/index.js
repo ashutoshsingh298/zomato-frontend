@@ -3,39 +3,72 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-Object.defineProperty(exports, 'BufferedConsole', {
+Object.defineProperty(exports, 'BaseReporter', {
   enumerable: true,
   get: function () {
-    return _BufferedConsole.default;
+    return _BaseReporter.default;
   }
 });
-Object.defineProperty(exports, 'CustomConsole', {
+Object.defineProperty(exports, 'CoverageReporter', {
   enumerable: true,
   get: function () {
-    return _CustomConsole.default;
+    return _CoverageReporter.default;
   }
 });
-Object.defineProperty(exports, 'NullConsole', {
+Object.defineProperty(exports, 'DefaultReporter', {
   enumerable: true,
   get: function () {
-    return _NullConsole.default;
+    return _DefaultReporter.default;
   }
 });
-Object.defineProperty(exports, 'getConsoleOutput', {
+Object.defineProperty(exports, 'NotifyReporter', {
   enumerable: true,
   get: function () {
-    return _getConsoleOutput.default;
+    return _NotifyReporter.default;
   }
 });
+Object.defineProperty(exports, 'SummaryReporter', {
+  enumerable: true,
+  get: function () {
+    return _SummaryReporter.default;
+  }
+});
+Object.defineProperty(exports, 'VerboseReporter', {
+  enumerable: true,
+  get: function () {
+    return _VerboseReporter.default;
+  }
+});
+exports.utils = void 0;
 
-var _BufferedConsole = _interopRequireDefault(require('./BufferedConsole'));
+var _utils = require('./utils');
 
-var _CustomConsole = _interopRequireDefault(require('./CustomConsole'));
+var _BaseReporter = _interopRequireDefault(require('./BaseReporter'));
 
-var _NullConsole = _interopRequireDefault(require('./NullConsole'));
+var _CoverageReporter = _interopRequireDefault(require('./CoverageReporter'));
 
-var _getConsoleOutput = _interopRequireDefault(require('./getConsoleOutput'));
+var _DefaultReporter = _interopRequireDefault(require('./DefaultReporter'));
+
+var _NotifyReporter = _interopRequireDefault(require('./NotifyReporter'));
+
+var _SummaryReporter = _interopRequireDefault(require('./SummaryReporter'));
+
+var _VerboseReporter = _interopRequireDefault(require('./VerboseReporter'));
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {default: obj};
 }
+
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+const utils = {
+  formatTestPath: _utils.formatTestPath,
+  printDisplayName: _utils.printDisplayName,
+  relativePath: _utils.relativePath,
+  trimAndFormatPath: _utils.trimAndFormatPath
+};
+exports.utils = utils;
